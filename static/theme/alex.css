@@ -1,0 +1,16 @@
+body{
+    background: #ddd6cc;
+}
+*{
+    margin: 0;
+}
+.header{
+    height: 80px;
+    background-color: blue;
+    text-align: center;
+    /*width: 100%;*/
+    /*background-color: #00FA9A;*/
+}
+.header h1{
+    margin-top: 0;
+}

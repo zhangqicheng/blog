@@ -1,0 +1,84 @@
+.author-img{
+    width: 60px;
+    height: 60px;
+}
+.article-footer span{
+    margin-right: 15px;
+}
+.article-footer{
+    margin-top: 5px;
+}
+
+/*个人博客主页样式*/
+/*.header p{*/
+    /*font-size: 24px;*/
+    /*padding: 10px 0;*/
+    /*font-weight: bold;*/
+/*}*/
+
+/*主页内容*/
+.container{
+    margin-top: 40px;
+}
+h3{
+    margin-top: 0;
+}
+#div_digg {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    font-size: 12px;
+    width: 128px;
+    text-align: center;
+    margin-top: 10px;
+}
+#div_digg {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    font-size: 12px;
+    width: 128px;
+    text-align: center;
+    margin-top: 10px;
+}
+.diggit {
+    float: left;
+    width: 46px;
+    height: 52px;
+    background: url("/static/images/upup.gif") no-repeat;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 2px;
+    padding-top: 5px;
+}
+.buryit {
+    float: right;
+    margin-left: 20px;
+    width: 46px;
+    height: 52px;
+    background: url("/static/images/downdown.gif") no-repeat;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 2px;
+    padding-top: 5px;
+}
+.clear {
+    clear: both;
+}
+input.author{
+    background-image: url('/static/images/icon_form.gif');
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    padding: 4px 4px 4px 30px;
+    width: 300px;
+    font-size: 13px;
+}
+.list-group-item .con{
+    margin-top: 10px;
+}
+.dropdown .dropdown-menu li a:hover{
+    color: #075DB3;
+}
+
+
+

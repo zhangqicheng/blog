@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人管理</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <style>
+        body{
+            background: #ddd6cc;
+        }
+        h2{
+            margin: 0;
+            text-align: center;
+            line-height: 55px;
+        }
+        .header{
+            width: 100%;
+            height: 60px;
+            background-color: grey;
+        }
+        .header p{
+            font-size: 35px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p>{{ user.username }}发布博客</p>
+        <a href="{% url 'index' %}"><input type="button" value="返回首页" class="pull-right btn btn-primary"></a>
+    </div>
+
+    <!--   主内容开始    !-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10 col-sm-offset-2">
+                <h4 style="color: #3e8f3e;">添加随笔</h4>
+                <form action="/blog/backend/add_article/" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <label for="title">文章标题:</label>
+                        <input type="text" name="title" id="title" class="form-inline" style="width: 300px;">
+                    </div>
+                    <div>
+                        <p>内容(tinymce富文本编辑器,支持黏贴，上传操作)</p>
+                        <textarea name="article_content" id="article_content" cols="60" rows="10"></textarea>
+                    </div>
+                    <div class="foot_1" style="margin: 10px auto">
+                        <label for="category">文章类别：</label>
+                        <select name="category" id="category" class="form-inline"style="width: 300px;height: 30px">
+                            {% for category in category_obj %}
+                                <option value="{{ category.nid }}">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <hr>
+                    <label for="">文章标签:</label>
+                    <div class="foot_2">
+{#                        {% for tag in tag_obj %}#}
+{#                            <input type="checkbox" name="tag" id="{{ tag.nid }}">{{ tag.title }}#}
+{#                            <hr>#}
+{#                        {% endfor %}#}
+                        <select name="tag" id="tag" multiple="multiple">
+                            {% for tag in tag_obj %}
+                                <option value="{{ tag.nid }}">{{ tag.title }}</option>
+                            {% endfor %}
+                        </select>
+                    <hr>
+                    </div>
+                    <input type="submit" value="提交" class="btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+<script src="/static/jquery-3.4.1.js"></script>
+<script charset="utf-8" src="/static/kindeditor/kindeditor-all.js"></script>
+    <script>
+        KindEditor.ready(function(K) {
+                window.editor = K.create('#article_content',{
+                    height:'350px',
+                    uploadJson:'/blog/upload/',
+                    extraFileUploadParams:{
+                        'csrfmiddlewaretoken':$('[name="csrfmiddlewaretoken"]').val()
+                    },
+                    filePostName:'upload_img',
+                });
+        });
+    </script>
+</body>
+</html>

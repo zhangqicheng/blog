@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+    <link rel="stylesheet" href="/static/theme/{{ blog.theme }}">
+    <title>{{ blog.title }}</title>
+</head>
+<body>
+{#    蓝兔博客站点#}
+{% if blog.site == 'lantu' %}
+    <div class="header">
+            {#    <p>{{ blog.title }}</p>#}
+            <div class="col-md-4 info_1">
+            <img src="/static/images/photo.jpg" alt="" width="150px" height="150px">
+            <h3 class="pull-right" style="text-align: center">{{ blog.title }}</h3>
+        </div>
+            <div class="col-md-5 info_2">
+                <h1>执子之手，与子偕老</h1>
+                <p>于千万人之中，我遇见了我所遇见的人....</p>
+        </div>
+            <div class="col-md-3 info_3">
+            <img src="/static/images/text02.jpg" alt="" width="341px" height="170px">
+        </div>
+    </div>
+    {% else %}
+    <div class="header">
+        <h1>{{ blog.title }}</h1>
+    </div>
+    {% endif %}
+
+<div class="container">
+    <div class="col-md-3">
+        {% load my_tags %}
+        {% get_left_menu username %}
+    </div>
+    <div class="col-md-8" style="background-color: #CCCCCC;">
+        {% block page-main %}{% endblock %}
+    </div>
+</div>
+
+<script src="/static/jquery-3.4.1.js"></script>
+<script src="/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

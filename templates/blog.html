@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录表单</title>
+    <script type="application/x-javascript">
+        addEventListener("load", function(){ setTimeout(hideURLbar, 0); }, false);function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <link rel="stylesheet" href="{% static 'css/blog-style.css' %}" type="text/css" media="all">
+</head>
+<body>
+<div class="aa"></div>
+<h1>极客视界</h1>
+<div class="container w3layouts agileits">
+    <div class="login w3layouts agileits">
+        <h2>登 录</h2>
+        <form action="{% url 'login' %}" method="POST" novalidate>
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="用户名" required="" value="{{ username }}">
+            <input type="password" name="password" placeholder="密码" required="">
+            <ul class="tick w3layouts agileits">
+                <li>
+                    <input type="checkbox" id="brand1" {{ checked }} name="remember">
+                    <label for="brand1"><span></span>记住我</label>
+                </li>
+            </ul>
+            <div class="send-button w3layouts agileits">
+                <input type="submit" value="登 录"><span style="color: red;">{{ errmsg }}</span>
+        </div>
+        </form>
+        <a href="#">记住密码?</a>
+        <div class="clear"></div>
+    </div>
+    <div class="register w3layouts agileits">
+        <h2>注 册</h2>
+        <form action="{% url 'register' %}" method="POST" novalidate>
+            {% csrf_token %}
+            {% for filed in form_obj %}
+                {{ filed }}<p class="help-block" style="color: red">{{ filed.errors.0 }}</p>
+            {% endfor %}
+            <div class="send-button w3layouts agileits">
+                <input type="submit" value="免费注册">
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="footer w3layouts agileits">
+    <p>Copyright © More Templates</p>
+</div>
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+    <div class="xl-chrome-ext-bar__logo"></div>
+
+    <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+    <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+</div>
+</body>
+</html>

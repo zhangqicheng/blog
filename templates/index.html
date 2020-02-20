@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客主页</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="font-size: 20px;">博客首页</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="#">功能块 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">联系我们</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'blog:add_article' %}">后台管理</a></li>
+                {% endif %}
+{#                <li class="dropdown">#}
+{#                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"#}
+{#                       aria-expanded="false">后台管理 <span class="caret"></span></a>#}
+{#                    <ul class="dropdown-menu"></ul>#}
+{#                </li>#}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li><a href="#">用户名:{{ user.username }}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">个人中心 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'blog:crop' %}">修改头像</a></li>
+                            <li><a href="{% url 'blog:userinfo' %}">个人资料</a></li>
+                            <li><a href="/blog/{{ user.username }}/">俺的站点</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'logout' %}">注销</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">登录</a></li>
+                    <li><a href="{% url 'register' %}">注册</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--主页面 开始-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">文章分类</div>
+                <div class="panel-body">
+                    {% for category in category_obj %}
+                        <p>{{ category.title }}({{ category.a }})</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">文章标签</div>
+                <div class="panel-body">
+                    {% for tag in tag_obj %}
+                        <p>{{ tag.title }}({{ tag.a }})</p>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- 文章列表 开始!-->
+            <div class="article-list">
+                {% for article in article_list %}
+                    <div class="article">
+                        <h3><a href="{% url 'blog:article_detail' article.user.username article.pk %}">{{ article.title }}</a></h3>
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object author-img" src="/media/{{ article.user.avatar }}" alt="...">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <p>{{ article.desc }}</p>
+                            </div>
+                        </div>
+                        <div class="article-footer">
+                            <span><a href="{% url 'blog:home' article.user.username %}">{{ article.user.username }}</a></span>发布于:
+                            <span>{{ article.create_time|date:'Y-m-d H:i:s' }}</span>
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true">评论({{ article.comment_count }})</span>
+                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">点赞({{ article.up_count }})</span>
+                        </div>
+                        <hr>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- 文章列表 结束-->
+        </div>
+        <div class="col-md-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">今日脑筋急转弯</div>
+                <div class="panel-body">
+                    请问：为什么双腿离地了，聪明的大脑又重新占领高地了?
+                    <select name="left_select" id="left_select" class="form-control">
+                        <option value="0">-----</option>
+                        <option value="1">因为爱情</option>
+                        <option value="2">因为友情</option>
+                        <option value="3">因为病毒关闭了</option>
+                    </select>
+                    <input type="button" value="想好就点击我吧" class="btn btn-primary" style="margin-top: 5px" id="right-btn">
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">最新消息</div>
+                <div class="panel-body">
+                    玛雅人的预言好像不太准哦(预定爬虫实现，还未操刀)
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation" style="text-align: center">
+        <ul class="pagination">
+            <p>
+                {% for row in page_info.pager %}
+                    {{ row|safe }}
+                {% endfor %}
+            </p>
+        </ul>
+    </nav>
+</div>
+<!--主页面 结束-->
+
+
+<script src="/static/jquery-3.4.1.js"></script>
+<script src="/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script>
+    $(function () {
+        $('#right-btn').click(function () {
+            var v=$('#left_select').val()
+            if(v==1){
+                alert('大笨蛋，你有对象吗，谁给的勇气选爱情呦')
+            }
+            if(v==2){
+                alert('相信正常人不会选这个，除非他...你懂得')
+            }
+            if(v==3){
+                alert('答对了')
+            }
+            if(v==0){
+                alert('请先选择一下，好不好,好笨哦，你')
+            }
+        })
+    })
+</script>
+</body>
+</html>
