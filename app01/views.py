@@ -36,7 +36,7 @@ class Blog(View):
             if form_obj.is_valid():
                 #如果验证通过
                 user=models.UserInfo.objects.create_user(**form_obj.cleaned_data)
-                user.is_active=0
+                #user.is_active=0
                 user.save()
 
                 #加密用户信息
@@ -45,10 +45,10 @@ class Blog(View):
                 token = serializer.dumps(info)
                 token = token.decode('utf-8')
 
-                send_register_active_email(user.email,user.username,token)
+                #send_register_active_email(user.email,user.username,token)
 
-                # return redirect(reverse('login'))#返回到login页面
-                return HttpResponse('您已注册成功QAQ，已发送激活邮件到您的注册邮箱，为了网络安全及防止恶意注册账户，请通过链接登录账号')
+                return redirect(reverse('login'))#返回到login页面
+                #return HttpResponse('您已注册成功QAQ，已发送激活邮件到您的注册邮箱，为了网络安全及防止恶意注册账户，请通过链接登录账号')
             else:
                 return render(request,'blog.html',{'form_obj':form_obj})
         else:
