@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>逝去的粒子 · 个人博客</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <!-- 左侧固定信息与分类导航 -->
+    <aside class="sidebar">
+      <div class="profile-header">
+        <div class="avatar-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="4" y="4" width="16" height="16" rx="3" />
+            <path d="M9 15V9l3 4 3-4v6" />
+          </svg>
+        </div>
+        <h1 class="author-name">逝去的粒子</h1>
+        <p class="author-role">新手 &amp; 全栈开发者</p>
+        <p class="author-bio">
+          高职院校一线辅导员，业余用 Vue3、Python 与 MongoDB Atlas 折腾校园效率工具。这里记录真实开发踩坑与日常思考。
+        </p>
+      </div>
+
+      <div>
+        <p class="sidebar-section-title">分类筛选</p>
+        <ul class="nav-list">
+          <li>
+            <button type="button" class="nav-btn is-active" data-filter="all">
+              <span>全部文章</span>
+              <span class="nav-count">1</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-btn" data-filter="fullstack">
+              <span>全栈开发</span>
+              <span class="nav-count">1</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-btn" data-filter="work">
+              <span>育人手记</span>
+              <span class="nav-count">0</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-btn" data-filter="tools">
+              <span>效率工具</span>
+              <span class="nav-count">0</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="meta-links">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:linmo@example.com">Email</a>
+        </div>
+        <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
+          深色模式
+        </button>
+      </div>
+    </aside>
+
+    <!-- 右侧纵向时间线列表 -->
+    <main class="main-content">
+      <header class="page-header">
+        <h2 class="page-title">文章时间线</h2>
+        <p id="visibleCount" class="page-subtitle">1 篇文章</p>
+      </header>
+
+      <!-- 2026 年分组 -->
+      <section class="year-group" aria-labelledby="year-2026">
+        <span id="year-2026" class="year-label">2026</span>
+        <ol class="timeline">
+          <li class="timeline-item is-featured" data-category="fullstack">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-meta">
+              <time datetime="2026-11-20">11-20</time>
+              <span class="tag-pill">全栈开发</span>
+              <span class="featured-badge">置顶</span>
+            </div>
+            <a class="timeline-title-link" href="posts/fullstack-dev.html">
+              <span>从零开发辅导员系统的全栈过程</span>
+              <span class="timeline-arrow" aria-hidden="true">→</span>
+            </a>
+            <p class="timeline-excerpt">
+              记录一名辅导员如何利用晚上及周末时间，用 Vue3 + Flask + MongoDB Atlas 搭建学生档案与日常事务管理系统，并顺利部署到云服务器上。
+            </p>
+          </li>
+			
+		
+           <!-- <li class="timeline-item" data-category="work"> -->
+            <!-- <span class="timeline-dot" aria-hidden="true"></span> -->
+            <!-- <div class="timeline-meta"> -->
+              <!-- <time datetime="2026-09-12">09-12</time> -->
+              <!-- <span class="tag-pill">育人手记</span> -->
+            <!-- </div> -->
+            <!-- <a class="timeline-title-link" href="posts/counselor-workflow.html"> -->
+              <!-- <span>新学期谈心谈话清单：如何把重复琐事交给系统</span> -->
+              <!-- <span class="timeline-arrow" aria-hidden="true">→</span> -->
+            <!-- </a> -->
+            <!-- <p class="timeline-excerpt"> -->
+              <!-- 当表单收集、宿舍排查与晚归提醒不再依赖零散微信接龙，辅导员的时间就能更多留给真正需要沟通的学生。 -->
+            <!-- </p> -->
+          <!-- </li> -->
+        </ol>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
