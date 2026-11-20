@@ -551,6 +551,29 @@ button {
   color: inherit;
 }
 
+/* 文章内截图排版 */
+.post-figure {
+  margin: 24px auto 28px;
+}
+
+.post-figure img {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  background: var(--surface);
+}
+
+.post-figure figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* Giscus 评论区预留位 */
 .comments-section {
   margin-top: 56px;
