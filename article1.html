@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>从零开发辅导员系统的全栈过程 · 你的名字</title>
+  <meta name="description" content="从选型、搭环境到部署上线，完整复盘一套学生管理系统的开发过程。" />
+  <style>
+    /* ===== 变量（与首页一致） ===== */
+    :root {
+      --bg: #fbfcfe;
+      --card: #ffffff;
+      --fg: #1a1d23;
+      --muted: #6b7280;
+      --line: #e6e9ef;
+      --accent: #2b6cb0;
+      --accent-soft: rgba(43, 108, 176, 0.08);
+      --max-width: 1080px;
+      --prose-width: 680px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --font-mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16181c;
+        --card: #1d2026;
+        --fg: #e9ebef;
+        --muted: #9aa1ac;
+        --line: #2a2e36;
+        --accent: #6ba3e0;
+        --accent-soft: rgba(107, 163, 224, 0.1);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ===== 顶部导航（与首页一致） ===== */
+    .site-header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 28px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .site-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--fg);
+    }
+    .site-title:hover { text-decoration: none; color: var(--accent); }
+
+    .site-nav {
+      display: flex;
+      gap: 22px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .site-nav a { color: var(--muted); }
+    .site-nav a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ===== 文章容器 ===== */
+    .article-wrap {
+      max-width: var(--prose-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== 文章头部 ===== */
+    .post-header {
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .back-link:hover { color: var(--accent); text-decoration: none; }
+
+    .post-header h1 {
+      margin: 0 0 20px;
+      font-size: clamp(26px, 4vw, 36px);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .post-meta .tag {
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      letter-spacing: 0.03em;
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .post-meta .dot-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--line);
+    }
+
+    /* ===== 正文排版 ===== */
+    .post-content {
+      padding: 40px 0 56px;
+      font-size: 16.5px;
+      line-height: 1.9;
+      color: var(--fg);
+    }
+
+    .post-content > *:first-child { margin-top: 0; }
+
+    .post-content p {
+      margin: 0 0 1.4em;
+    }
+
+    .post-content h2 {
+      margin: 2.2em 0 0.9em;
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.4;
+      padding-bottom: 0.35em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .post-content h3 {
+      margin: 1.8em 0 0.7em;
+      font-size: 18.5px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.45;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      margin: 0 0 1.4em;
+      padding-left: 1.4em;
+    }
+    .post-content li { margin-bottom: 0.4em; }
+    .post-content li::marker { color: var(--muted); }
+
+    .post-content blockquote {
+      margin: 1.8em 0;
+      padding: 4px 0 4px 20px;
+      border-left: 3px solid var(--accent);
+      color: var(--muted);
+      font-size: 15.5px;
+    }
+    .post-content blockquote p { margin: 0.6em 0; }
+
+    /* 行内代码 */
+    .post-content :not(pre) > code {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      padding: 0.15em 0.4em;
+      border-radius: 5px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    /* 代码块 */
+    .post-content pre {
+      margin: 1.8em 0;
+      padding: 20px 22px;
+      background: #1d2026;
+      color: #e6e6e6;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.7;
+      border: 1px solid var(--line);
+    }
+    .post-content pre code {
+      font-family: var(--font-mono);
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    /* 图片 */
+    .post-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 2em auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+    }
+
+    /* 图片说明 */
+    .post-content figure {
+      margin: 2em 0;
+    }
+    .post-content figcaption {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* 分割线 */
+    .post-content hr {
+      margin: 2.8em 0;
+      border: none;
+      border-top: 1px solid var(--line);
+    }
+
+    /* 强调 */
+    .post-content strong { font-weight: 700; }
+
+    /* ===== 文末 ===== */
+    .post-footer {
+      padding: 8px 0 0;
+      border-top: 1px solid var(--line);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .post-footer a { font-size: 13px; }
+
+    /* ===== Giscus 评论区占位 ===== */
+    .comments {
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+    }
+
+    .comments h2 {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    /* 
+      Giscus 占位：等你到 giscus.app 配置好仓库和分类后，
+      把生成的 <script> 标签粘贴到下面这个 div 内部即可，
+      并删除 .giscus-placeholder 这段占位提示。
+    */
+    .giscus-placeholder {
+      padding: 32px 24px;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      background: var(--card);
+    }
+
+    /* ===== 页脚 ===== */
+    .site-footer {
+      max-width: var(--max-width);
+      margin: 72px auto 0;
+      padding: 28px 24px 56px;
+      font-size: 12.5px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 640px) {
+      .post-header { padding: 32px 0 28px; }
+      .post-content { font-size: 16px; padding: 32px 0 40px; }
+      .post-content h2 { font-size: 20px; }
+      .post-content h3 { font-size: 17px; }
+      .post-content pre { padding: 16px 16px; font-size: 12.5px; }
+      .comments { margin-top: 48px; padding-top: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../index.html">你的名字</a>
+    <nav class="site-nav">
+      <a href="../index.html">首页</a>
+      <a href="../index.html#now">现在</a>
+      <a href="../index.html#about">关于</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="article-wrap">
+      <!-- 文章头部 -->
+      <header class="post-header">
+        <a class="back-link" href="../index.html">← 返回首页</a>
+        <h1>从零开发辅导员系统的全栈过程</h1>
+        <div class="post-meta">
+          <time datetime="2026-11-20">2026-11-20</time>
+          <span class="dot-sep"></span>
+          <span class="tag">全栈</span>
+          <span class="dot-sep"></span>
+          <span>约 12 分钟</span>
+        </div>
+      </header>
+
+      <!-- 正文 -->
+      <article class="post-content">
+        <p>
+          这套辅导员系统最初只是为了解决自己工作中的重复劳动：每学期的学生信息核对、请假审批、谈话记录整理，
+          大半时间花在了手工整理表格上。于是我想，与其继续用 Excel，不如自己写一个。
+        </p>
+        <p>
+          这篇文章完整记录从选型到上线部署的全过程，包括中间推翻重来的部分。它不是教程，更像是开发日志，
+          希望能给同样想动手做一个内部工具的人一点参考。
+        </p>
+
+        <h2>一、需求梳理：先想清楚要解决什么</h2>
+        <p>
+          在写代码之前，我花了大约一周时间只做一件事：把每天的工作流程写下来，标记出哪些环节可以被工具替代。
+          最终收敛成三个核心模块：
+        </p>
+        <ul>
+          <li><strong>学生信息管理</strong>：增删改查、批量导入、按班级和状态筛选；</li>
+          <li><strong>请假审批</strong>：学生提交、辅导员审批、记录归档；</li>
+          <li><strong>谈话记录</strong>：按学生归档，支持检索。</li>
+        </ul>
+        <p>
+          需求不清就开始写代码，是这类小项目最常见的烂尾原因。先写清楚「不做什么」，比写「做什么」更重要。
+        </p>
+
+        <h2>二、技术选型：够用就好</h2>
+        <p>
+          我给自己定了一个原则：<strong>只选自己半年后还看得懂的方案</strong>。最终的技术栈是：
+        </p>
+        <ul>
+          <li>前端：Vue 3 + Vite，组件用原生写法，不引 UI 框架；</li>
+          <li>后端：Flask，轻量、路由直观，方便快速迭代；</li>
+          <li>数据库：MongoDB Atlas，托管免运维，结构灵活；</li>
+          <li>部署：一台云服务器 + Nginx + Gunicorn。</li>
+        </ul>
+
+        <blockquote>
+          <p>
+            不要因为项目「小」就随意堆技术栈，也不要因为「想学」就选一整套陌生的框架。
+            小项目的技术选型，判断标准只有一个：你能不能独立把它维护下去。
+          </p>
+        </blockquote>
+
+        <h2>三、后端：Flask 与数据结构</h2>
+        <p>
+          后端我拆成了三个 Blueprint：<code>students</code>、<code>leaves</code>、<code>records</code>，
+          每个模块独立的路由文件和模型文件。入口文件只负责注册和配置：
+        </p>
+
+        <pre><code>from flask import Flask
+from app.students import students_bp
+from app.leaves import leaves_bp
+from app.records import records_bp
+
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object("config.Config")
+
+    app.register_blueprint(students_bp, url_prefix="/api/students")
+    app.register_blueprint(leaves_bp, url_prefix="/api/leaves")
+    app.register_blueprint(records_bp, url_prefix="/api/records")
+    return app
+
+app = create_app()</code></pre>
+
+        <p>
+          MongoDB 的好处是文档结构灵活，学生信息里加一个字段不需要写迁移脚本。但代价是
+          <strong>约束要自己在应用层写清楚</strong>，否则数据会越来越脏。我的做法是在每个模块里维护一份字段校验函数，
+          所有写入前统一调用。
+        </p>
+
+        <h2>四、前端：Vue 3 的取舍</h2>
+        <p>
+          前端用 Vue 3 的组合式 API，但没有引入任何 UI 组件库，所有表格、弹窗、表单都是自己写的。
+          原因不是「想锻炼」，而是组件库的样式和交互默认值往往需要大量覆盖，反而不如从零写几个简单组件来得直接。
+        </p>
+        <p>
+          比较重要的一个设计是：把「接口请求」和「页面状态」分开。所有 API 调用集中在 <code>src/api/</code> 目录，
+          页面组件只负责展示和触发，不直接写 <code>fetch</code>。这样后端接口调整时，前端只需要改一处。
+        </p>
+
+        <h2>五、联调与踩坑</h2>
+        <p>前后端联调阶段是我花时间最多的地方，印象最深的有三个坑：</p>
+
+        <h3>1. 跨域问题</h3>
+        <p>
+          本地开发时前端跑在 5173，后端跑在 5000，直接请求会被浏览器拦截。解决方案是后端加 CORS，
+          同时在生产环境用 Nginx 把 <code>/api</code> 反向代理到后端，前端只请求同源地址。
+        </p>
+
+        <h3>2. 时间格式不一致</h3>
+        <p>
+          MongoDB 存的是 UTC 时间，前端直接显示会差 8 小时。后来统一约定：后端所有时间字段输出 ISO 字符串，
+          前端用 <code>Intl.DateTimeFormat</code> 格式化，问题才彻底解决。
+        </p>
+
+        <h3>3. 分页与搜索冲突</h3>
+        <p>
+          学生列表既要分页又要支持搜索，最初的实现是前端先拉全量再筛选，数据一多就卡。
+          后来改成后端接收搜索关键词和页码，返回分页结果，前端只负责渲染。
+        </p>
+
+        <h2>六、部署上线</h2>
+        <p>
+          部署用的是最朴素的方式：Gunicorn 启动 Flask，Nginx 做反向代理和静态文件托管，前端打包后的
+          <code>dist</code> 目录直接交给 Nginx。整个过程写成了一个部署脚本，每次更新只需要执行一遍：
+        </p>
+
+        <pre><code># 部署脚本（简化版）
+cd /var/www/counselor
+git pull origin main
+
+# 前端
+cd frontend && npm install && npm run build
+
+# 后端
+cd ../backend && source venv/bin/activate && pip install -r requirements.txt
+sudo systemctl restart counselor-api</code></pre>
+
+        <h2>七、复盘：如果重来一次</h2>
+        <p>项目上线运行了几个月，整体稳定，但有几个地方如果重来我会做得不一样：</p>
+        <ol>
+          <li><strong>更早引入权限体系</strong>。最初的版本没有区分角色，后来加管理员和普通辅导员权限时改动很大；</li>
+          <li><strong>更早写接口文档</strong>。联调阶段靠口头约定接口，后期维护时经常要翻代码确认字段；</li>
+          <li><strong>测试不必求全，但关键路径要有</strong>。请假审批的状态流转如果没有测试，改一次怕一次。</li>
+        </ol>
+
+        <hr />
+
+        <p>
+          总的来说，一个人做一个内部工具，最大的敌人不是技术难度，而是
+          <strong>范围蔓延和半途而废</strong>。把需求收窄、把技术选简单、把每个模块做完整，
+          比追求「架构先进」重要得多。
+        </p>
+        <p>
+          下一篇我会单独写前后端接口约定的部分，包括字段命名、错误码和分页规范，感兴趣的话可以关注一下。
+        </p>
+      </article>
+
+      <!-- 文末 -->
+      <div class="post-footer">
+        <a href="../index.html">← 返回首页</a>
+        <span>写于 2026-11-20</span>
+      </div>
+
+      <!-- Giscus 评论区 -->
+      <section class="comments">
+        <h2>评论</h2>
+
+        <!-- 
+          ========================================
+          Giscus 接入位置
+          1. 打开 https://giscus.app，配置仓库、分类、映射方式
+          2. 复制生成的 <script> 标签
+          3. 粘贴到下面这个 div 里，替换掉占位内容
+          ========================================
+        -->
+        <div id="giscus">
+          <div class="giscus-placeholder">
+            评论区尚未接入。<br />
+            配置好 Giscus 后，把生成的 &lt;script&gt; 标签粘贴到这里即可。
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span id="year"></span> 你的名字</span>
+    <span>纯 HTML / CSS / JS 手写 · GitHub Pages 托管</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
