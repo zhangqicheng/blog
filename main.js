@@ -167,11 +167,45 @@
       });
     });
   }
+  
+  // 自动统计首页分类与总文章数量
+  function syncArticleCounts() {
+    const items = document.querySelectorAll(".timeline-item");
+    const filterButtons = document.querySelectorAll("[data-filter]");
+    const countEl = document.getElementById("visibleCount");
+
+    if (!items.length || !filterButtons.length) return;
+
+    const categoryCounts = {};
+    items.forEach((item) => {
+      const cat = item.getAttribute("data-category");
+      if (cat) {
+        categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+      }
+    });
+
+    filterButtons.forEach((btn) => {
+      const countSpan = btn.querySelector(".nav-count");
+      if (!countSpan) return;
+
+      const filter = btn.getAttribute("data-filter");
+      if (filter === "all") {
+        countSpan.textContent = String(items.length);
+      } else {
+        countSpan.textContent = String(categoryCounts[filter] || 0);
+      }
+    });
+
+    if (countEl) {
+      countEl.textContent = `${items.length} 篇文章`;
+    }
+  }
 
   document.addEventListener("DOMContentLoaded", () => {
     initTheme();
     bindThemeToggle();
     const drawerController = bindMobileDrawer();
+	syncArticleCounts();
     bindCategoryFilter(drawerController);
     bindCodeCopy();
   });
