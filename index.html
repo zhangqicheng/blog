@@ -4,12 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>逝去的粒子 · 个人博客</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20261121" />
 </head>
 <body>
+  <!-- 移动端顶部栏（仅小屏显示） -->
+  <header class="mobile-topbar" aria-label="移动端导航">
+    <a class="mobile-brand" href="index.html">逝去的粒子</a>
+    <button
+      type="button"
+      id="menuToggle"
+      class="mobile-menu-btn"
+      aria-controls="mobileDrawer"
+      aria-expanded="false"
+      aria-label="打开菜单"
+    >
+      <span class="mobile-menu-icon" aria-hidden="true">☰</span>
+      <span>菜单</span>
+    </button>
+  </header>
+
+  <!-- 移动端抽屉遮罩 -->
+  <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
   <div class="site-shell">
-    <!-- 左侧固定信息与分类导航 -->
-    <aside class="sidebar">
+    <!-- 左侧固定信息与分类导航（移动端转为侧滑菜单） -->
+    <aside id="mobileDrawer" class="sidebar" aria-label="站点信息与筛选">
+      <div class="drawer-header">
+        <span class="drawer-title">菜单与筛选</span>
+        <button
+          type="button"
+          id="menuClose"
+          class="drawer-close-btn"
+          aria-label="关闭菜单"
+        >
+          ✕
+        </button>
+      </div>
+
       <div class="profile-header">
         <div class="avatar-mark" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -20,7 +51,7 @@
         <h1 class="author-name">逝去的粒子</h1>
         <p class="author-role">教育从业者 &amp; 全栈开发者</p>
         <p class="author-bio">
-          一名教育从业者，业余用 Vue3、Flask 与 MongoDB Atlas 折腾轻量效率工具。这里记录真实开发踩坑与日常思考。
+          一名教育从业者，业余用 Vue3、Flask 与 MongoDB Atlas 折腾轻量效率工具。这里记录真实开发踩坑与日常观察。
         </p>
       </div>
 
@@ -41,7 +72,7 @@
           </li>
           <li>
             <button type="button" class="nav-btn" data-filter="work">
-              <span>随手一记</span>
+              <span>离群观察</span>
               <span class="nav-count">1</span>
             </button>
           </li>
@@ -56,7 +87,7 @@
 
       <div class="sidebar-footer">
         <div class="meta-links">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/zhangqicheng" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="mailto:linmo@example.com">Email</a>
         </div>
         <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
@@ -88,31 +119,29 @@
               <span class="timeline-arrow" aria-hidden="true">→</span>
             </a>
             <p class="timeline-excerpt">
-              记录一名教育从业者如何利用晚上及周末时间，用 Vue3 + Flask + MongoDB Atlas 搭建学生与日常事务管理系统，并顺利部署到云服务器上。
+              记录一名教育从业者如何利用业余时间，用 Vue3 + Flask + MongoDB Atlas 搭建轻量效率工具，并部署到云服务器的完整过程。
             </p>
           </li>
-			
-		
-           <li class="timeline-item" data-category="work">
+
+          <li class="timeline-item" data-category="work">
             <span class="timeline-dot" aria-hidden="true"></span>
             <div class="timeline-meta">
               <time datetime="2026-11-12">11-12</time>
-              <span class="tag-pill">随手一记</span>
+              <span class="tag-pill">离群观察</span>
             </div>
             <a class="timeline-title-link" href="posts/article2.html">
-              <span>一些非常有用的冷门观察</span>
+              <span>一些没什么用的冷门观察</span>
               <span class="timeline-arrow" aria-hidden="true">→</span>
             </a>
             <p class="timeline-excerpt">
-              蚂蚁的工伤认定、永动机的“忙完这阵”，以及猫看人类像看行为艺术家的日常——不讲道理。
+              蚂蚁的工伤认定、永动机的“忙完这阵”，以及猫看人类像看行为艺术家的日常——不讲道理，纯粹图个乐。
             </p>
           </li>
         </ol>
       </section>
-
     </main>
   </div>
 
-  <script src="main.js"></script>
+  <script src="main.js?v=20261121"></script>
 </body>
 </html>

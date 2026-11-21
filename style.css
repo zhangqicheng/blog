@@ -1,6 +1,6 @@
 /* ==========================================================================
    极简双栏时间线个人博客 · 全局样式表 (style.css)
-   纯原生 CSS 变量驱动，支持浅色/深色模式、大屏双栏与移动端自适应
+   纯原生 CSS 变量驱动，支持浅色/深色模式、大屏双栏与移动端抽屉自适应
    ========================================================================== */
 
 :root {
@@ -602,33 +602,136 @@ button {
 }
 
 /* ==========================================================================
-   响应式适配：小于 860px 折叠为单栏
+   移动端顶部栏与抽屉菜单基础样式（大屏默认隐藏）
+   ========================================================================== */
+.mobile-topbar {
+  display: none;
+}
+
+.drawer-header {
+  display: none;
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 18, 0.45);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity var(--transition);
+  z-index: 40;
+}
+
+.drawer-backdrop.is-visible {
+  opacity: 1;
+}
+
+body.drawer-open {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   响应式适配：小于 860px 启用顶部栏与侧滑抽屉菜单
    ========================================================================== */
 @media (max-width: 860px) {
-  .site-shell {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
-    padding: 32px 20px 72px;
-  }
-
-  .sidebar {
-    position: static;
-    gap: 18px;
-    padding-bottom: 20px;
+  .mobile-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: 54px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
   }
 
+  .mobile-brand {
+    font-size: 16px;
+    font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  .site-shell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 24px 18px 72px;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 84vw);
+    max-width: 100%;
+    z-index: 50;
+    padding: 20px 18px 28px;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .drawer-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .drawer-close-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1;
+  }
+
   .nav-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .nav-btn,
   .nav-link {
-    width: auto;
-    gap: 8px;
-    padding: 6px 12px;
+    width: 100%;
+    padding: 8px 10px;
+  }
+
+  .page-header {
+    margin-bottom: 24px;
+    padding-bottom: 14px;
   }
 
   .post-title {

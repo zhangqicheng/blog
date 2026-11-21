@@ -4,12 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>从零开发轻量事务工具的全栈过程 · 逝去的粒子</title>
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../style.css?v=20261121" />
 </head>
 <body>
+  <!-- 移动端顶部栏（仅小屏显示） -->
+  <header class="mobile-topbar" aria-label="移动端导航">
+    <a class="mobile-brand" href="../index.html">逝去的粒子</a>
+    <button
+      type="button"
+      id="menuToggle"
+      class="mobile-menu-btn"
+      aria-controls="mobileDrawer"
+      aria-expanded="false"
+      aria-label="打开菜单"
+    >
+      <span class="mobile-menu-icon" aria-hidden="true">☰</span>
+      <span>菜单</span>
+    </button>
+  </header>
+
+  <!-- 移动端抽屉遮罩 -->
+  <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
   <div class="site-shell">
     <!-- 左侧固定导航与作者信息（注意子目录路径使用 ../） -->
-    <aside class="sidebar">
+    <aside id="mobileDrawer" class="sidebar" aria-label="文章导航与作者信息">
+      <div class="drawer-header">
+        <span class="drawer-title">导航与选项</span>
+        <button
+          type="button"
+          id="menuClose"
+          class="drawer-close-btn"
+          aria-label="关闭菜单"
+        >
+          ✕
+        </button>
+      </div>
+
       <div class="profile-header">
         <div class="avatar-mark" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -51,7 +82,7 @@
       <div class="sidebar-footer">
         <div class="meta-links">
           <a href="../index.html">首页</a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/zhangqicheng" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
         <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
           深色模式
@@ -164,7 +195,7 @@ def create_r2_client():
             到现在为止，这套工具并不是一个“功能大而全”的成品，其他零散痛点也依然存在。但对我来说，这恰恰是最舒服的状态：<strong>真实遇到哪方面的麻烦，再针对性地往里加功能；没必要提前做的事，就不去折腾无用功</strong>。
           </p>
           <p>
-            写下这篇记录，既是为了留存自己从零搭出这套全栈系统的真实过程，也是想给自己留一张更完整的名片——一个会观察一线痛点、能独立把想法变成可用系统的水瓶座开发者。以后如果有了新的折腾、新的经验或者谁想了解哪方面，我也会单独出一篇针对那个问题的文章。
+            写下这篇记录，既是为了留存自己从零搭出这套全栈系统的真实过程，也是想给自己留一份阶段性的折腾备忘——一个会观察一线痛点、能独立把想法变成可用系统的水瓶座开发者。以后如果有了新的折腾、新的经验或者谁想了解哪方面，我也会单独出一篇针对那个问题的文章。
           </p>
         </div>
       </article>
@@ -191,6 +222,6 @@ def create_r2_client():
     </main>
   </div>
 
-  <script src="../main.js"></script>
+  <script src="../main.js?v=20261121"></script>
 </body>
 </html>

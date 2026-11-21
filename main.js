@@ -1,10 +1,11 @@
 /* ==========================================================================
    极简个人博客交互脚本 (main.js)
-   负责：1. 深浅色主题持久化切换  2. 首页时间线分类筛选  3. 代码块一键复制
+   负责：1. 深浅色主题持久化切换  2. 首页时间线分类筛选  3. 代码块一键复制  4. 移动端抽屉菜单
    ========================================================================== */
 
 (function () {
   const THEME_KEY = "blog-theme-preference";
+  const MOBILE_BREAKPOINT = 860;
 
   // 初始化主题（优先读取本地存储，其次跟随系统偏好）
   function initTheme() {
@@ -34,8 +35,67 @@
     });
   }
 
+  // 移动端抽屉菜单控制
+  function bindMobileDrawer() {
+    const drawer = document.getElementById("mobileDrawer");
+    const backdrop = document.getElementById("drawerBackdrop");
+    const openBtn = document.getElementById("menuToggle");
+    const closeBtn = document.getElementById("menuClose");
+
+    if (!drawer || !backdrop || !openBtn) return null;
+
+    function setDrawerOpen(isOpen) {
+      drawer.classList.toggle("is-open", isOpen);
+      openBtn.setAttribute("aria-expanded", String(isOpen));
+      document.body.classList.toggle("drawer-open", isOpen);
+
+      if (isOpen) {
+        backdrop.hidden = false;
+        requestAnimationFrame(() => backdrop.classList.add("is-visible"));
+      } else {
+        backdrop.classList.remove("is-visible");
+        setTimeout(() => {
+          if (!drawer.classList.contains("is-open")) {
+            backdrop.hidden = true;
+          }
+        }, 200);
+      }
+    }
+
+    openBtn.addEventListener("click", () => {
+      const expanded = openBtn.getAttribute("aria-expanded") === "true";
+      setDrawerOpen(!expanded);
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => setDrawerOpen(false));
+    }
+
+    backdrop.addEventListener("click", () => setDrawerOpen(false));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && drawer.classList.contains("is-open")) {
+        setDrawerOpen(false);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > MOBILE_BREAKPOINT && drawer.classList.contains("is-open")) {
+        setDrawerOpen(false);
+      }
+    });
+
+    return {
+      closeOnMobile: () => {
+        if (window.innerWidth <= MOBILE_BREAKPOINT && drawer.classList.contains("is-open")) {
+          setDrawerOpen(false);
+        }
+      },
+    };
+  }
+
   // 首页时间线分类筛选
-  function bindCategoryFilter() {
+  function bindCategoryFilter(drawerController) {
     const filterButtons = document.querySelectorAll("[data-filter]");
     const items = document.querySelectorAll(".timeline-item");
     const yearGroups = document.querySelectorAll(".year-group");
@@ -69,6 +129,10 @@
 
         if (countEl) {
           countEl.textContent = `${visibleTotal} 篇文章`;
+        }
+
+        if (drawerController) {
+          drawerController.closeOnMobile();
         }
       });
     });
@@ -107,7 +171,8 @@
   document.addEventListener("DOMContentLoaded", () => {
     initTheme();
     bindThemeToggle();
-    bindCategoryFilter();
+    const drawerController = bindMobileDrawer();
+    bindCategoryFilter(drawerController);
     bindCodeCopy();
   });
 })();
