@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一些非常有用的冷门观察 · 逝去的粒子</title>
+  <link rel="stylesheet" href="../style.css?v=20261121" />
+</head>
+<body>
+  <!-- 移动端顶部栏（仅小屏显示） -->
+  <header class="mobile-topbar" aria-label="移动端导航">
+    <a class="mobile-brand" href="../index.html">逝去的粒子</a>
+    <button
+      type="button"
+      id="menuToggle"
+      class="mobile-menu-btn"
+      aria-controls="mobileDrawer"
+      aria-expanded="false"
+      aria-label="打开菜单"
+    >
+      <span class="mobile-menu-icon" aria-hidden="true">☰</span>
+      <span>菜单</span>
+    </button>
+  </header>
+
+  <!-- 移动端抽屉遮罩 -->
+  <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
+  <div class="site-shell">
+    <!-- 左侧固定导航与作者信息（注意子目录路径使用 ../） -->
+    <aside id="mobileDrawer" class="sidebar" aria-label="文章导航与作者信息">
+      <div class="drawer-header">
+        <span class="drawer-title">导航与选项</span>
+        <button
+          type="button"
+          id="menuClose"
+          class="drawer-close-btn"
+          aria-label="关闭菜单"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="profile-header">
+        <div class="avatar-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="4" y="4" width="16" height="16" rx="3" />
+            <path d="M9 15V9l3 4 3-4v6" />
+          </svg>
+        </div>
+        <h2 class="author-name"><a href="../index.html">逝去的粒子</a></h2>
+        <p class="author-role">教育从业者 &amp; 业余开发者</p>
+        <p class="author-bio">
+          一名教育从业者，业余用 Vue3、Flask 与 MongoDB Atlas 折腾轻量效率工具。
+        </p>
+      </div>
+
+      <div>
+        <p class="sidebar-section-title">页面导航</p>
+        <ul class="nav-list">
+          <li>
+            <a class="nav-link" href="../index.html">
+              <span>返回时间线首页</span>
+              <span class="nav-count">←</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link is-active" href="#top">
+              <span>正文内容</span>
+              <span class="nav-count">01</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#comments">
+              <span>Giscus 评论区</span>
+              <span class="nav-count">02</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="meta-links">
+          <a href="../index.html">首页</a>
+          <a href="https://github.com/zhangqicheng" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false">
+          深色模式
+        </button>
+      </div>
+    </aside>
+
+    <!-- 右侧文章详情主内容 -->
+    <main id="top" class="main-content">
+      <a class="back-link" href="../index.html">← 返回时间线</a>
+
+      <article>
+        <header class="post-header">
+          <div class="post-meta">
+            <time datetime="2026-11-12">2026-11-12</time>
+            <span class="tag-pill">离群观察</span>
+            <span>约 10 分钟阅读</span>
+          </div>
+          <h1 class="post-title">一些非常有用的冷门观察2</h1>
+        </header>
+
+        <div class="post-body">
+
+  <h3>01｜白娘子与“端午节的盲目自信”</h3>
+  <p>端午节那天，许仙在家里炖了一锅雄黄酒，端到白娘子面前劝她喝一口。</p>
+  <p>小青在旁边急得直使眼色，心想姐姐你这法力平时看着挺稳，真喝下去怕是要当场现原形，赶紧提前运转真气护体吧。可白娘子端着酒杯，觉得自己修炼了上千年，底子厚得很，这点小场面根本用不着提前做防护，仰头就干了一大杯。</p>
+  <p>结果不到三秒，白娘子两眼一翻，直接化作一条大白蛇盘在了床上。许仙推门进来一看，当场吓晕过去。</p>
+  <p>小青冲进来扶额叹气：“姐姐，我早就提醒你提前运功抵挡，你怎么偏不听？”</p>
+  <p>白娘子吐着信子，虚弱地晃了晃尾巴：“我以为……我能‘蛇（舍）我其谁’呢……”</p>
+
+  <h3>02｜剑客的“十年磨一剑”</h3>
+  <p>江湖上有位年轻剑客，拜入名师门下后，师父让他每天早起练基本功、擦拭佩剑，为三年后的华山论剑做准备。</p>
+  <p>剑客觉得日常训练太枯燥，每天不是在客栈喝茶，就是在街上看热闹，佩剑扔在角落里生了锈也懒得管，总觉得临上场前再擦亮也来得及。</p>
+  <p>三年转眼即逝，论剑那天，对手抽出宝剑寒光凛凛，他却拔了半天没拔出来——剑鞘和剑身早就被铁锈死死焊在了一起。对手愣在原地，问他：“阁下这是何意？”</p>
+  <p>剑客使出吃奶的力气拽着剑柄，涨红了脸说：“别慌，我练的这招叫‘锈（秀）外慧中’。”</p>
+
+  <h3>03｜诸葛亮与“说走就走的旅行”</h3>
+  <p>建兴五年，诸葛亮准备北伐，临行前把所有粮草、兵力、行军路线全都算得清清楚楚，连哪天刮东南风都写进了备忘录。</p>
+  <p>副将看着那厚厚一沓计划表，忍不住感叹：“丞相，咱们行军打仗，有必要把半年后的细节都提前算得这么死吗？就不能来一场说走就走的北伐？”</p>
+  <p>诸葛亮摇了摇羽扇，没有说话。</p>
+  <p>结果大军刚出发三天，副将负责押运的那批粮草就因为没提前算好天气，全淋湿发霉了。副将急得满头大汗，跑来请罪：“丞相，粮草全湿了，现在怎么办？”</p>
+  <p>诸葛亮看着他，悠悠地叹了口气：“还能怎么办，凉拌（粮拌）呗。”</p>
+
+  <h3>04｜关羽的“临时抱佛脚”</h3>
+  <p>出征前，军师把行军地图和备忘录递给关羽，叮嘱他路过窄道时提前做好预案，别等到了跟前再翻书。</p>
+  <p>关羽捋了捋美髯，觉得自己武艺高强、看家本领过硬，这点小细节根本用不着提前操心，大刀一扛就上了路。</p>
+  <p>结果走到一处狭窄山道时，前面突然出现一堆乱石和岔路，关羽勒住马缰，这才手忙脚乱地翻开卷轴找路线，结果越翻越乱，愣是在原地绕了半天圈。</p>
+  <p>副将在后面看得直摇头：“将军，这下可怎么走？”</p>
+  <p>关羽单手扶着青龙刀，面不改色地说：“不急，既然绕了圈，那就叫‘滑（华）容道’吧。”</p>
+
+  <h3>05｜当代年轻人的“薛定谔的闹钟”</h3>
+  <p>著名物理学家薛定谔最近在研究一种全新的量子力学现象，叫“早八闹钟”。</p>
+  <p>他发现，当一个闹钟被设在早上七点半时，在它响起之前，人往往同时处于“已经醒了”和“还在做梦”的叠加态；而一旦闹钟响起，只要伸手按掉它并说出一句咒语，时间就会发生剧烈的坍缩。</p>
+  <p>助手好奇地问：“是什么咒语这么厉害？”</p>
+  <p>薛定谔推了推眼镜，严肃地回答：“‘我再眯一分钟’。只要念出这六个字，下一秒睁眼就会直接传送到中午十二点——在物理学上，我们称之为‘午（无）法无天’。”</p>
+
+  <h3>06｜关于“手机电量 1%”的极限生存</h3>
+  <p>出门前手机电量还剩 12%，明明有足够的时间插上充电线，可总有人觉得“刷完这一条再充也来得及”，结果一路刷到电量跌破 5%、弹出一片红色警告。</p>
+  <p>到了 1% 之后，屏幕亮度调到最低，蓝牙和定位全关，整个人像排雷专家一样屏住呼吸，连滑动屏幕都不敢用力，仿佛多划一下就会把最后一点电费耗尽。</p>
+  <p>随着屏幕“啪”地一声彻底黑掉，周围瞬间安静下来。旁边的人看了一眼黑屏的手机，问：“现在没网没电，怎么办？”</p>
+  <p>他把手机往兜里一揣，语气格外从容：“慌什么，这叫‘关（官）机大吉’。”</p>
+
+  <h3>07｜导航软件里的“重新规划路线”</h3>
+  <p>开车用导航的时候，最让人心平气和的其实不是“前方一路畅通”，而是当你一不小心开错路口时，那个女声用一种毫无波澜、甚至带点温柔的语气说：“您已偏航，正在为您重新规划路线。”</p>
+  <p>它既不会骂你“刚才那个路口我提醒过你三遍了”，也不会嘲笑你“连个直行和右转都分不清”。它只是在零点几秒内，基于你当前这个不太理想的位置，重新算出一条还能通往目的地的路——只不过可能要多绕两公里，或者多等三个红绿灯。</p>
+  <p>现实里其实也很少有“一步走错就全剧终”的绝路，无非就是每错过一个路口，后面就得多付一点绕路的油费和时间成本。</p>
+
+
+</div>
+         
+      </article>
+
+      <!-- 底部 Giscus 评论区接入位置 -->
+      <section id="comments" class="comments-section" aria-labelledby="comments-title">
+        <h2 id="comments-title" class="comments-heading">评论区（Giscus）</h2>
+        <script src="https://giscus.app/client.js"
+                    data-repo="zhangqicheng/blog"
+                    data-repo-id="R_kgDOV1FWrg"
+                    data-category="Announcements"
+                    data-category-id="DIC_kwDOV1FWrs4DLjmo"
+                    data-mapping="pathname"
+                    data-strict="0"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="preferred_color_scheme"
+                    data-lang="zh-CN"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+      </section>
+    </main>
+  </div>
+
+  <script src="../main.js?v=20261121"></script>
+</body>
+</html>
